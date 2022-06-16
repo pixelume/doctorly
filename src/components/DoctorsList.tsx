@@ -13,6 +13,7 @@ import {
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import ScheduleIcon from '@mui/icons-material/Schedule'
 import React from 'react'
 import { useAppSelector, useAppDispatch } from 'hooks'
 import { removeDoctor } from 'store/slices/uiSlice'
@@ -40,10 +41,22 @@ const DoctorsList = () => {
               key={doctor.id}
               secondaryAction={
                 <>
+                  <Tooltip
+                    title={`Create appointment for Dr ${doctor.surname}`}
+                  >
+                    <IconButton
+                      edge="end"
+                      aria-label="appointment"
+                      onClick={() => null}
+                      sx={{ mr: 1 }}
+                    >
+                      <ScheduleIcon color="primary" />
+                    </IconButton>
+                  </Tooltip>
                   <Tooltip title={`View calendar for Dr ${doctor.surname}`}>
                     <IconButton
                       edge="end"
-                      aria-label="delete"
+                      aria-label="calendar"
                       onClick={() => null}
                       sx={{ mr: 1 }}
                     >
