@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import logo from './logo.svg'
+import './App.css'
+import { useGetPokemonByNameQuery } from 'api'
+import { useAppSelector } from 'hooks'
+useAppSelector
 
-function App() {
+const App = () => {
+  const { data, isError, isLoading } = useGetPokemonByNameQuery('bulbasaur')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : data != null ? (
+        <p>{data.name}</p>
+      ) : (
+        isError && <p>Error</p>
+      )}
+    </>
+  )
 }
 
-export default App;
+export default App
