@@ -1,23 +1,22 @@
 import React from 'react'
 import logo from './logo.svg'
 import './App.css'
-import { useGetPokemonByNameQuery } from 'api'
+// import { useGetPokemonByNameQuery } from 'api'
 import { useAppSelector } from 'hooks'
-useAppSelector
+import { Box, Container, ToggleButtonGroup, ToggleButton } from '@mui/material'
+import MainSelection from 'components/MainSelection'
+import Doctors from 'components/Doctors'
+import { setMainSelection } from 'store/slices/uiSlice'
 
 const App = () => {
-  const { data, isError, isLoading } = useGetPokemonByNameQuery('bulbasaur')
+  // const { data, isError, isLoading } = useGetPokemonByNameQuery('bulbasaur')
+  const { mainSelection } = useAppSelector((state) => state.ui)
 
   return (
-    <>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : data != null ? (
-        <p>{data.name}</p>
-      ) : (
-        isError && <p>Error</p>
-      )}
-    </>
+    <Container>
+      <MainSelection />
+      {mainSelection === 'Doctors' && <Doctors />}
+    </Container>
   )
 }
 

@@ -2,13 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from 'store'
 
 // Define a type for the slice state
+
+export type SelectionOptions = 'Doctors' | 'Events' | undefined
+export type DoctorType = { id: string; name: string; surname: string }
 interface UiSlice {
-  sideBarOpen: boolean
+  mainSelection: SelectionOptions
+  doctors: DoctorType[]
 }
 
 // Define the initial state using that type
 const initialState: UiSlice = {
-  sideBarOpen: false,
+  mainSelection: undefined,
+  doctors: [],
 }
 
 export const uiSlice = createSlice({
@@ -16,16 +21,19 @@ export const uiSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setSideBarOpen: (state, action: PayloadAction<boolean>) => {
-      state.sideBarOpen = action.payload
+    setMainSelection: (state, action: PayloadAction<SelectionOptions>) => {
+      state.mainSelection = action.payload
     },
-    toggleSideBarOpen: (state) => {
-      state.sideBarOpen = !state.sideBarOpen
+    addDoctor: (state, action: PayloadAction<DoctorType>) => {
+      state.doctors.push(action.payload)
+    },
+    removeDoctor: (state, action: PayloadAction<string>) => {
+      state.doctors = state.doctors.filter((item) => item.id !== action.payload)
     },
   },
 })
 
-export const { setSideBarOpen, toggleSideBarOpen } = uiSlice.actions
+export const { setMainSelection, addDoctor, removeDoctor } = uiSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value
